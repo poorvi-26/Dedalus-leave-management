@@ -1,2 +1,2 @@
-# Dedalus-_leave-management
+# Dedalus-leave-management
 Responsive Leave Management Application
