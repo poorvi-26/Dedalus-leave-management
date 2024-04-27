@@ -4,6 +4,7 @@ import { IDropdownItem } from '../../../../interface/common-interface';
 import { CommonService } from '../../../../services/common-api.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonDataService } from '../../../../services/common.service';
+import { BASE_URL } from '../../../../app.constants';
 
 @Component({
   selector: 'app-leave-apply',
@@ -31,6 +32,11 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
   constructor(private commonApiService: CommonService, private toastr: ToastrService, private commonDataService: CommonDataService){ }
 
   ngOnInit() {
+    let user = this.commonDataService.getUserData();
+    if(!user || !user.role || user.role!=='employee' ){
+      this.commonDataService.deleteUserData();
+      window.location.href = BASE_URL;
+    }
     this.leaveTypeList = [
       { id: 'planned', text: 'Planned Leave' },
       { id: 'sick', text: 'Sick Leave' },

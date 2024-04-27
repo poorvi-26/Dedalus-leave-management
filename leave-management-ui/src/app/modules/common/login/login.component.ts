@@ -48,6 +48,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    let user = this.commonDataService.getUserData();
+
+    if(!!user && !!user.employeeID){
+      this.commonDataService.deleteUserData();
+      window.location.href = BASE_URL;
+    }
   }
 
   ngOnDestroy(): void {

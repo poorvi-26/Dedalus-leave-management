@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { CommonDataService } from '../../../services/common.service';
-import { Subject, takeUntil } from 'rxjs';
 import { BASE_URL } from '../../../app.constants';
 
 @Component({
@@ -14,15 +13,10 @@ export class HeaderComponent {
 
   loggedIn: boolean = false;
 
-  private ngInitUnsubscribe = new Subject<void>();
-
-  name: string = '';
-
   constructor(private commonDataService: CommonDataService){
     let user = this.commonDataService.getUserData();
     if(!!user && !!user.employeeName){
       this.loggedIn = true;
-      this.name = user.employeeName;
     }
   }
 

@@ -3,6 +3,8 @@ import { CommonService } from '../../../../services/common-api.service';
 import { IDateString, IDropdownItem, ITableData, ITableHeader } from '../../../../interface/common-interface';
 import { ToastrService } from 'ngx-toastr';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { CommonDataService } from '../../../../services/common.service';
+import { BASE_URL } from '../../../../app.constants';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -22,10 +24,15 @@ export class AdminDashboardComponent implements OnInit, OnDestroy{
 
   showLoader: boolean = false;
 
-  constructor(private commonApiService: CommonService, private toastr: ToastrService){
+  constructor(private commonApiService: CommonService, private toastr: ToastrService, private commonDataService: CommonDataService){
   }
 
   ngOnInit(){
+    let user = this.commonDataService.getUserData();
+    if(!user || !user.role || user.role!=='admin' ){
+      this.commonDataService.deleteUserData();
+      window.location.href = BASE_URL;
+    }
     this.requestStatusList = [
       { id: 'underReview', text: 'Pending' },
       { id: 'approved', text: 'Approved' },

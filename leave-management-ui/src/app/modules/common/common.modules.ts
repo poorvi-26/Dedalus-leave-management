@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { LoginComponent } from "./login/login.component";
-import { PageNotFoundComponent } from "./pageNotFound/pagenotFound.component";
 import { HeaderComponent } from "./header/header.component";
 import { RouterModule, Routes } from "@angular/router";
 import { FormsModule } from "@angular/forms";
@@ -14,7 +13,7 @@ const routes : Routes = [{
 ]
 
 @NgModule({
-  declarations:[LoginComponent, PageNotFoundComponent, HeaderComponent],
+  declarations:[LoginComponent, HeaderComponent],
   imports: [RouterModule.forChild(routes), FormsModule, CommonModule],
   exports: [HeaderComponent],
   providers: []
