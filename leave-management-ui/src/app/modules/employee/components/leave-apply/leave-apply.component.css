@@ -1,0 +1,33 @@
+.leave-apply-body {
+  .card{
+    width: 60%;
+    .form-group {
+      padding: 30px;
+      .form-group-row{
+        flex-direction: row;
+        label{
+          width: 40%;
+          .required{
+            color: red;
+          }
+        }
+        .value{
+          width: 50%;
+          .error{
+            color: red;
+            font-size: 13px;
+            margin: 6px;
+          }
+        }
+        .display{
+          border: 1px solid black;
+        }
+        .center{
+          align-items: center;
+          justify-content: center;
+          display: flex;
+        }
+      }
+    }
+  }
+}

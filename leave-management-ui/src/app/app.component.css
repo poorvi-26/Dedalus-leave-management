@@ -1,0 +1,18 @@
+.main{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+  .header {
+    height: 80px;
+  }
+  .body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background: #f8f9fd;
+    min-height: 400px;
+  }
+}

@@ -1,0 +1,57 @@
+<div class="leave-apply-body content-body">
+  <div class="page-heading">Leave Application Form</div>
+  <div class="card">
+    <div class="card-body">
+    <div class="form-group">
+      <div class="form-group-row">
+        <label for="type-input">Type<span class="required">*</span></label>
+        <ng-multiselect-dropdown
+          class="value dropdown"
+          [placeholder]="'Select Leave Type'"
+          [settings]="dropdownSettings"
+          [data]="leaveTypeList"
+          [(ngModel)]="selectedLeaveType">
+        </ng-multiselect-dropdown>
+      </div>
+      <div class="form-group-row">
+        <label for="start-date">Start Date<span class="required">*</span></label>
+        <div class="value">
+        <input
+          type="date"
+          id="start-date"
+          [(ngModel)]="startDateString"
+          #startDate
+          (ngModelChange)="onstartDateChange()"/>
+        <div *ngIf="showStartDateError" class="error">You can not select past Dates</div>
+        </div>
+      </div>
+      <div class="form-group-row">
+        <label for="end-date">End Date<span class="required">*</span></label>
+        <div class="value">
+          <input
+          type="date"
+          id="end-date"
+          [(ngModel)]="endDateString"
+          #endDate
+          (ngModelChange)="onEndDateChange()"/>
+          <div *ngIf="showEndDateError" class="error">End Date should not be before Start Date</div>
+        </div>
+      </div>
+      <div class="form-group-row">
+        <label >Number of Days</label>
+        <div class="value display center"> {{days}} </div>
+      </div>
+      <div class="form-group-row">
+        <label for="reason">Type</label>
+        <textarea class="value display" type="text" id="reason" [(ngModel)]="reason" [placeholder]="'Reason for the leave'"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button
+      [disabled]="!days || showStartDateError || showEndDateError|| !selectedLeaveType.length"
+      class="btn-primary"
+      (click)="submit()">Submit Request</button>
+  </div>
+  </div>
+</div>

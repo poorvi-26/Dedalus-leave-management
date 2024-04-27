@@ -1,0 +1,24 @@
+<div class="login-body">
+  <div class="card">
+    <div class="card-header">
+      <div class="heading">LOGIN</div>
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <div class="form-group-row">
+          <label for="username-input">Username</label>
+          <input class="value" type="text" id="username-input" [(ngModel)]="username" [placeholder]="'Type Your Username'"/>
+        </div>
+        <div class="form-group-row">
+          <label for="password-input">Password</label>
+          <div class="value">
+            <input type="password" id="password-input" [(ngModel)]="password" [placeholder]="'Type Your Password'"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn-primary" [disabled]="!(!!username && !!password && !disableLogin)" (click)="login()">Submit</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="admin-dashboard-body content-body">
+  <div class="page-heading">Leave Reports</div>
+  <div class="form-group">
+    <div class="form-group-row">
+      <label>See Requests Under Status</label>
+      <ng-multiselect-dropdown
+          class="value dropdown"
+          [placeholder]="'Select Leave Status'"
+          [settings]="dropdownSettings"
+          [data]="requestStatusList"
+          [(ngModel)]="selectedRequestStatus"
+          (onSelect)="resetTable()">
+        </ng-multiselect-dropdown>
+    </div>
+  </div>
+  <div *ngIf="tableHeaders.length !== 0 && !showLoader" class="table">
+    <table>
+      <thead class="table-head">
+        <tr>
+          <th *ngFor="let option of tableHeaders">{{option.label}}</th>
+        </tr>
+      </thead>
+      <tbody class="table-body" *ngIf="tableData?.length !== 0">
+        <tr
+          class="table-body-row"
+          *ngFor="let row of tableData; let i = index"
+        >
+          <ng-container *ngFor="let option of tableHeaders">
+            <td [title]="option.name==='reason' ?row[option.name]:''" *ngIf="option.type!='actions' && option.type!=='date'">{{row[option.name]}}</td>
+            <td class="actions" *ngIf="option.type=='actions'">
+              <i [title]="'Approve'" (click)="approveRequest(row)" class="fa fa-check tick"></i>
+              <i [title]="'Reject'" (click)="rejectRequest(row)" class="fa fa-times cross"></i>
+            </td>
+            <td *ngIf="option.type=='date'">{{row[option.name].date}}-{{row[option.name].month}}-{{row[option.name].year}}</td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="tableData.length===0" class="no-data">
+    No Data Found
+  </div>
+
+  <div *ngIf="showLoader">
+    <img class="loader-spinner" src="assets/Spinner-2.gif" alt="Loading ..."/>
+  </div>
+</div>
