@@ -3,6 +3,7 @@ import { CommonService } from '../../../../services/common-api.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonDataService } from '../../../../services/common.service';
 import { ActivatedRoute } from '@angular/router';
+import { BASE_URL } from '../../../../app.constants';
 
 @Component({
   selector: 'leave-report',
@@ -117,6 +118,10 @@ export class LeaveReportComponent implements OnInit, OnDestroy {
       this.toastr.error("Unable to update request status");
       setTimeout(()=>window.location.reload(), 1000);
     })
+  }
+
+  back(){
+    window.location.href = BASE_URL+'admin';
   }
 
   ngOnDestroy(): void {}

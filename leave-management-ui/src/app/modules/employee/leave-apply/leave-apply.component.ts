@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { IDropdownItem } from '../../../../interface/common-interface';
-import { CommonService } from '../../../../services/common-api.service';
+import { IDropdownItem } from '../../../interface/common-interface';
+import { CommonService } from '../../../services/common-api.service';
 import { ToastrService } from 'ngx-toastr';
-import { CommonDataService } from '../../../../services/common.service';
-import { BASE_URL } from '../../../../app.constants';
+import { CommonDataService } from '../../../services/common.service';
+import { BASE_URL } from '../../../app.constants';
 
 @Component({
   selector: 'app-leave-apply',
@@ -126,12 +126,8 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
     this.commonApiService.addNewRequest(obj).then(
       (data:any)=>{
         console.log("added");
-        this.selectedLeaveType = [];
-        this.startDate = new Date();
-        this.endDate = new Date();
-        this.reason = '';
-        this.days = 1;
         this.toastr.success("Leave applied Successfully.");
+        setTimeout(()=> window.location.reload(), 1000);
       },
       (err)=>{
         console.log("error");

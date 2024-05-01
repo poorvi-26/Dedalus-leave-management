@@ -81,6 +81,8 @@ export class AdminDashboardComponent implements OnInit, OnDestroy{
     if (this.selectedRequestStatus.length === 0) {
       this.selectedRequestStatus = [item];
       this.toastr.info("At least one status type should be selected");
+    }else{
+      this.resetTable();
     }
   }
 

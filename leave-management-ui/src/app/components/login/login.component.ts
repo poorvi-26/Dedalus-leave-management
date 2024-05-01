@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CommonService } from '../../../services/common-api.service';
-import { BASE_URL } from '../../../app.constants';
-import { CommonDataService } from '../../../services/common.service';
+import { CommonService } from '../../services/common-api.service';
+import { BASE_URL } from '../../app.constants';
+import { CommonDataService } from '../../services/common.service';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: this.password
     }
     this.commonApiService.login(obj).then(
-      (data) => {
+      (data:any) => {
         console.log(data);
         this.commonDataService.setUserData(data);
         this.disableLogin = false;

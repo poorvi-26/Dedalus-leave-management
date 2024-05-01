@@ -1,4 +1,17 @@
 .leave-report-body{
+  .page-heading{
+    width:100%;
+    .back{
+      margin-right: auto;
+      .fa{
+        margin-left: 20px;
+      }
+    }
+    .page-head{
+      margin: auto;
+      margin-left: -5px;
+    }
+  }
   .page-content{
     display: flex;
     gap: 50px;

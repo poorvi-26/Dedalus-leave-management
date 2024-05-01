@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { LeaveApplyComponent } from "./components/leave-apply/leave-apply.component";
+import { LeaveApplyComponent } from "./leave-apply/leave-apply.component";
 import { RouterModule, Routes } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";

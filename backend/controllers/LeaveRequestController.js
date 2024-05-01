@@ -45,8 +45,6 @@ exports.listAllLeaveRequests = async (req, res) => {
       };
     }));
 
-    console.log(populatedRequests);
-
     res.status(200).json(populatedRequests);
   } catch (error) {
     console.error(error);

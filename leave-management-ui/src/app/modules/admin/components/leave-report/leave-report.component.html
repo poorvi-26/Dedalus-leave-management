@@ -1,5 +1,7 @@
 <div class="leave-report-body content-body">
-  <div *ngIf="!showLoader" class="page-heading">Leave Request Report</div>
+  <div *ngIf="!showLoader" class="page-heading">
+    <div class="back" (click)="back()"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
+    <div class="page-head">Leave Request Report</div></div>
   <div class="page-content">
     <div class="employee-data">
       <div class="employee-data-heading">Employee Data</div>

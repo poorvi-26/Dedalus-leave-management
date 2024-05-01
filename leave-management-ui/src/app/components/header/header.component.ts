@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { CommonDataService } from '../../../services/common.service';
-import { BASE_URL } from '../../../app.constants';
+import { CommonDataService } from '../../services/common.service';
+import { BASE_URL } from '../../app.constants';
 
 @Component({
   selector: 'app-header',
@@ -12,10 +12,11 @@ import { BASE_URL } from '../../../app.constants';
 export class HeaderComponent {
 
   loggedIn: boolean = false;
+  user: any = {};
 
   constructor(private commonDataService: CommonDataService){
-    let user = this.commonDataService.getUserData();
-    if(!!user && !!user.employeeName){
+    this.user = this.commonDataService.getUserData();
+    if(!!this.user && !!this.user.employeeName){
       this.loggedIn = true;
     }
   }
@@ -25,6 +26,17 @@ export class HeaderComponent {
       this.commonDataService.deleteUserData();
       window.location.href = BASE_URL;
     }
+  }
+
+  onDashboard(){
+    let redirectUrl = ''
+    if(this.loggedIn){
+      if(this.user.role == 'admin')
+        redirectUrl = 'admin';
+      else
+        redirectUrl = 'employee';
+    }
+    window.location.href = BASE_URL+redirectUrl;
   }
 
   ngOnInit(){
