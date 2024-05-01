@@ -1,57 +1,84 @@
 <div class="leave-apply-body content-body">
   <div class="page-heading">Leave Application Form</div>
-  <div class="card">
-    <div class="card-body">
-    <div class="form-group">
-      <div class="form-group-row">
-        <label for="type-input">Type<span class="required">*</span></label>
-        <ng-multiselect-dropdown
-          class="value dropdown"
-          [placeholder]="'Select Leave Type'"
-          [settings]="dropdownSettings"
-          [data]="leaveTypeList"
-          [(ngModel)]="selectedLeaveType">
-        </ng-multiselect-dropdown>
-      </div>
-      <div class="form-group-row">
-        <label for="start-date">Start Date<span class="required">*</span></label>
-        <div class="value">
-        <input
-          type="date"
-          id="start-date"
-          [(ngModel)]="startDateString"
-          #startDate
-          (ngModelChange)="onstartDateChange()"/>
-        <div *ngIf="showStartDateError" class="error">You can not select past Dates</div>
+  <div class="page-content">
+    <div class="leave-data">
+      <div class="leave-data-heading">LEAVE ACCOUNT REPORT</div>
+      <table class="leave-data-table">
+        <thead class="table-head">
+          <tr>
+            <th></th>
+            <th *ngFor="let option of leaveTypeList">{{option.text}}</th>
+          </tr>
+        </thead>
+        <tbody class="table-body" *ngIf="tableData?.length !== 0">
+          <tr
+            class="table-body-row"
+            *ngFor="let row of tableData"
+          >
+            <th >{{row['header']}}</th>
+            <ng-container *ngFor="let option of leaveTypeList">
+              <td >{{leaveData[row['id']][option.id]}}</td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-body">
+      <div class="form-group">
+        <div class="form-group-row">
+          <label for="type-input">Type<span class="required">*</span></label>
+          <ng-multiselect-dropdown
+            class="value dropdown"
+            [placeholder]="'Select Leave Type'"
+            [settings]="dropdownSettings"
+            [data]="leaveTypeList"
+            [(ngModel)]="selectedLeaveType"
+            (onSelect)="calcUnpaidLeaves()">
+          </ng-multiselect-dropdown>
         </div>
-      </div>
-      <div class="form-group-row">
-        <label for="end-date">End Date<span class="required">*</span></label>
-        <div class="value">
+        <div class="form-group-row">
+          <label for="start-date">Start Date<span class="required">*</span></label>
+          <div class="value">
           <input
-          type="date"
-          id="end-date"
-          [(ngModel)]="endDateString"
-          #endDate
-          (ngModelChange)="onEndDateChange()"/>
-          <div *ngIf="showEndDateError" class="error">End Date should not be before Start Date</div>
+            type="date"
+            id="start-date"
+            [(ngModel)]="startDateString"
+            #startDate
+            (ngModelChange)="onstartDateChange()"/>
+          </div>
         </div>
-      </div>
-      <div class="form-group-row">
-        <label >Number of Days</label>
-        <div class="value display center"> {{days}} </div>
-      </div>
-      <div class="form-group-row">
-        <label for="reason">Type</label>
-        <textarea class="value display" type="text" id="reason" [(ngModel)]="reason" [placeholder]="'Reason for the leave'"></textarea>
+        <div class="form-group-row">
+          <label for="end-date">End Date</label>
+          <div class="value">
+            <input
+            type="date"
+            id="end-date"
+            [(ngModel)]="endDateString"
+            #endDate
+            (ngModelChange)="onEndDateChange()"/>
+            <div *ngIf="showEndDateError" class="error">End Date should not be before Start Date</div>
+          </div>
+        </div>
+        <div class="form-group-row">
+          <label >Number of Days</label>
+          <div class="value">
+            <div class="display center">{{days}}</div>
+            <div *ngIf="unpaidLeaves" class="error">{{unpaidLeavesCount}} Unpaid {{selectedLeaveType[0].text}} Leaves</div>
+          </div>
+        </div>
+        <div class="form-group-row">
+          <label for="reason">Reason</label>
+          <textarea class="value display" type="text" id="reason" [(ngModel)]="reason" [placeholder]="'Reason for the leave'"></textarea>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="card-footer">
-    <button
-      [disabled]="!days || showStartDateError || showEndDateError|| !selectedLeaveType.length"
-      class="btn-primary"
-      (click)="submit()">Submit Request</button>
-  </div>
+    <div class="card-footer">
+      <button
+        [disabled]="!days || showEndDateError|| !selectedLeaveType.length"
+        class="btn-primary"
+        (click)="submit()">Submit Request</button>
+    </div>
+    </div>
   </div>
 </div>

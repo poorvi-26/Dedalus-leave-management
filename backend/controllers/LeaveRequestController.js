@@ -32,22 +32,20 @@ exports.listAllLeaveRequests = async (req, res) => {
     console.log("filer", filter);
     const requests = await LeaveRequest.find(filter).sort({ raisedOn: -1 });
 
-    console.log("Requests", requests);
-
     const populatedRequests = await Promise.all(requests.map(async (request) => {
       const employee = await Employee.findOne({ employeeID: request.empID });
       return {
         requestId: request._id,
-        employeeId: request.empID,
         employeeName: employee ? employee.employeeName : 'Unknown',
-        startDate: request.startDate,
-        endDate: request.endDate,
         days: request.days,
         reason: request.reason,
         raisedOn: request.raisedOn,
-        type: request.type
+        type: request.type,
+        status: request.status,
       };
     }));
+
+    console.log(populatedRequests);
 
     res.status(200).json(populatedRequests);
   } catch (error) {
@@ -56,10 +54,42 @@ exports.listAllLeaveRequests = async (req, res) => {
   }
 };
 
+// Controller function to get detail of particular Request
+exports.getRequestData = async (req,res) => {
+  try{
+    const requestId = req.params.requestId;
+
+
+    // Find the leave request by requestId
+    const leaveRequest = await LeaveRequest.findById(requestId);
+    if (!leaveRequest) {
+      return res.status(404).json({ message: 'Leave request not found' });
+    }
+
+    // Find the employee details using empID from the leave request
+    const employeeId = leaveRequest.empID;
+    const employee = await Employee.findOne({ employeeID: employeeId });
+    if (!employee) {
+      return res.status(404).json({ message: 'Employee not found' });
+    }
+
+    // Combine leave request details with employee details
+    const result = {
+      leaveRequest: leaveRequest,
+      employee: employee
+    };
+
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 // Controller function to review a leave request
 exports.reviewLeaveRequest = async (req, res) => {
   try {
-    const { requestId, status } = req.body;
+    const { requestId, status, employeeId, leaves } = req.body;
     const validStatus = ['approved', 'rejected'];
     if (!validStatus.includes(status)) {
       return res.status(400).json({ message: 'Invalid status' });
@@ -67,6 +97,12 @@ exports.reviewLeaveRequest = async (req, res) => {
     const request = await LeaveRequest.findByIdAndUpdate(requestId, { status }, { new: true });
     if (!request) {
       return res.status(404).json({ message: 'Leave request not found' });
+    }
+    console.log(leaves, employeeId);
+    const empRequest = await Employee.findOneAndUpdate({employeeID: employeeId}, {leaves} );
+    console.log(empRequest);
+    if (!empRequest) {
+      return res.status(404).json({ message: 'Unable to update Employee Details'});
     }
     res.status(200).json({ message: 'Request status updated successfully' });
   } catch (error) {

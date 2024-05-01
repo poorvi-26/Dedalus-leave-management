@@ -8,6 +8,8 @@ router.post('/add-new', leaveRequestController.addNewLeaveRequest);
 // Route to list all leave requests
 router.post('/list-all', leaveRequestController.listAllLeaveRequests);
 
+// Route to get Details of particular request
+router.get('/get-request/:requestId', leaveRequestController.getRequestData);
 
 // Route to review a leave request
 router.put('/review', leaveRequestController.reviewLeaveRequest);

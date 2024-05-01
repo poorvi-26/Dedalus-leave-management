@@ -20,14 +20,16 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
 
   startDate: Date = new Date();
   endDate: Date = new Date();
-  minStartDate : Date = new Date();
 
   showEndDateError: boolean = false;
-  showStartDateError: boolean = false;
 
   reason: string = '';
   days: number = 1;
+  unpaidLeavesCount: number = 0;
+  unpaidLeaves: boolean = false;
 
+  tableData: any[] = [];
+  leaveData: any = {};
 
   constructor(private commonApiService: CommonService, private toastr: ToastrService, private commonDataService: CommonDataService){ }
 
@@ -38,10 +40,12 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
       window.location.href = BASE_URL;
     }
     this.leaveTypeList = [
-      { id: 'planned', text: 'Planned Leave' },
-      { id: 'sick', text: 'Sick Leave' },
-      { id: 'casual', text: 'Casual Leave' }
+      { id: 'planned', text: 'Planned' },
+      { id: 'sick', text: 'Sick' },
+      { id: 'casual', text: 'Casual' }
     ];
+    this.tableData = [{header:'Total', id: 'total'},{header:'Remaining', id: 'remaining'}];
+    this.leaveData = user.leaves;
     this.dropdownSettings = {
       singleSelection: true,
       idField: 'id',
@@ -76,14 +80,14 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
   }
 
   onstartDateChange(){
-    if(this.startDate<this.minStartDate){
-      this.showStartDateError = true;
-    } else {
+    if(this.endDate<this.startDate){
     this.endDateString = this.startDateString;
     this.days = 1;
-    this.showStartDateError = false;
+    this.calcUnpaidLeaves();
+    }else{
+      this.days = ((this.endDate.getTime()-this.startDate.getTime() )/ (1000 * 60 * 60 * 24)) + 1;
+      this.calcUnpaidLeaves();
     }
-
   }
 
   onEndDateChange(){
@@ -93,6 +97,18 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
     }else{
       this.days = ((this.endDate.getTime()-this.startDate.getTime() )/ (1000 * 60 * 60 * 24)) + 1;
       this.showEndDateError = false;
+      this.calcUnpaidLeaves();
+    }
+  }
+
+
+  calcUnpaidLeaves(){
+    if(Number(this.days) > Number(this.leaveData.remaining[this.selectedLeaveType[0].id])){
+      this.unpaidLeavesCount = Number(this.days) - Number(this.leaveData.remaining[this.selectedLeaveType[0].id]);
+      this.unpaidLeaves = true;
+    } else {
+      this.unpaidLeavesCount = 0;
+      this.unpaidLeaves = false;
     }
   }
 

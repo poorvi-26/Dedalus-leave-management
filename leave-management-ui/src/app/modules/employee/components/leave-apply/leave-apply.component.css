@@ -1,31 +1,56 @@
 .leave-apply-body {
-  .card{
-    width: 60%;
-    .form-group {
-      padding: 30px;
-      .form-group-row{
-        flex-direction: row;
-        label{
-          width: 40%;
-          .required{
-            color: red;
+  .page-content{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    .leave-data{
+      margin: auto;
+      .leave-data-heading{
+        justify-content: center;
+        display: flex;
+        font-size: 25px;
+      }
+      .leave-data-table{
+        margin: 16px;
+        font-size: medium;
+        thead{
+          font-size: larger;
+        }
+      }
+    }
+    .card{
+      width: 60%;
+      margin-right: 10px;
+      .form-group {
+        padding: 30px;
+        .form-group-row{
+          flex-direction: row;
+          label{
+            width: 40%;
+            .required{
+              color: red;
+            }
           }
-        }
-        .value{
-          width: 50%;
-          .error{
-            color: red;
-            font-size: 13px;
-            margin: 6px;
+          .value{
+            width: 50%;
+            .error{
+              color: red;
+              font-size: 13px;
+              margin: 6px;
+            }
+            .display{
+              height: 30px;
+              border-bottom: 0px;
+            }
           }
-        }
-        .display{
-          border: 1px solid black;
-        }
-        .center{
-          align-items: center;
-          justify-content: center;
-          display: flex;
+          .display{
+            border: 1px solid black;
+          }
+          .center{
+            align-items: center;
+            justify-content: center;
+            display: flex;
+          }
         }
       }
     }

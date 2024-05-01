@@ -1,0 +1,85 @@
+.leave-report-body{
+  .page-content{
+    display: flex;
+    gap: 50px;
+    width: 100%;
+    .employee-data{
+      width: 40%;
+      padding: 50px 20px;
+      .employee-data-heading{
+        font-size: 40px;
+        justify-content: center;
+        display: flex;
+        margin-bottom: 26px;
+        align-items: center;
+      }
+      .form-group{
+        margin-top: 50px;
+        .form-group-row{
+          flex-direction: row;
+          label{
+            width: 40%;
+            margin-left: 40px;
+          }
+          .value{
+            border: 0px;
+            cursor: auto;
+          }
+
+        }
+      }
+    }
+    .card{
+      width:45%;
+      .card-body{
+        flex-direction: column;
+        gap: 30px;
+        justify-content: center;
+        .card-body-head{
+          font-size: 40px;
+          justify-content: center;
+          display: flex;
+          .status{
+            color: #337ab7;
+            margin: 0px 40px;
+          }
+        }
+        .form-group{
+          .form-group-row{
+            label{
+
+            }
+            input{
+              display: flex;
+              justify-content: center;
+            }
+            .value{
+              cursor: auto;
+              border: 0px;
+              .error{
+                color: red;
+                display: flex;
+                justify-content: center;
+              }
+            }
+            .center{
+              display: flex;
+              justify-content: center;
+              background: rgba(118, 118, 118, 0.05);
+              align-items: center;
+              height: 30px;
+            }
+          }
+        }
+      }
+      .card-footer{
+        .btn-primary{
+          margin:0px auto 0px 0px;
+        }
+        button{
+          max-width: 40%;
+        }
+      }
+    }
+  }
+}

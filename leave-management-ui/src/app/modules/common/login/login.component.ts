@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         if(data.role == 'admin'){
           window.location.href = BASE_URL+'admin'
         }else {
-        window.location.href= BASE_URL+"employee";
+          window.location.href = BASE_URL+"employee";
         }
       },
       (err) =>{

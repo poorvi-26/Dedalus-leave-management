@@ -1,0 +1,110 @@
+<div class="leave-report-body content-body">
+  <div *ngIf="!showLoader" class="page-heading">Leave Request Report</div>
+  <div class="page-content">
+    <div class="employee-data">
+      <div class="employee-data-heading">Employee Data</div>
+      <div class="form-group">
+        <div class="form-group-row">
+          <label>Employee Name</label>
+          <div class="value">{{data.employee.employeeName}}</div>
+        </div>
+        <div class="form-group-row">
+          <label>Employee Id</label>
+          <div class="value">{{data.employee.employeeID}}</div>
+        </div>
+        <div class="form-group-row">
+          <label>Leaves Data</label>
+          <table class="value leave-data-table">
+            <thead class="table-head">
+              <tr>
+                <th></th>
+                <th *ngFor="let option of leaveTypeList">{{option.text}}</th>
+              </tr>
+            </thead>
+            <tbody class="table-body" *ngIf="tableData?.length !== 0">
+              <tr
+                class="table-body-row"
+                *ngFor="let row of tableData"
+              >
+                <th >{{row['header']}}</th>
+                <ng-container *ngFor="let option of leaveTypeList">
+                  <td >{{data.employee.leaves[row['id']][option.id]}}</td>
+                </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="card-body-head">Leave Request <span class="status">{{statusDisplay}}</span></div>
+      <div class="form-group">
+        <div class="form-group-row">
+          <label for="type-input">Type</label>
+          <ng-multiselect-dropdown
+            class="value dropdown"
+            [settings]="dropdownSettings"
+            [data]="leaveTypeList"
+            [(ngModel)]="selectedLeaveType"
+            [disabled]="true">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="form-group-row">
+          <label for="start-date">Start Date</label>
+          <input
+            class="value"
+            type="date"
+            id="start-date"
+            [(ngModel)]="startDateString"
+            disabled/>
+        </div>
+        <div class="form-group-row">
+          <label for="end-date">End Date<span class="required">*</span></label>
+          <input
+            class="value"
+            type="date"
+            id="end-date"
+            [(ngModel)]="endDateString"
+            disabled/>
+        </div>
+        <div class="form-group-row">
+          <label >Number of Days</label>
+          <div class="value">
+            <div class="display center">{{data.leaveRequest.days}} </div>
+            <div *ngIf="data.leaveRequest.status=='underReview' && unpaidLeaves" class="error">{{unpaidLeavesCount}} Unpaid {{selectedLeaveType[0].label}} Leaves</div>
+          </div>
+        </div>
+        <div class="form-group-row">
+          <label for="reason">Reason</label>
+          <textarea disabled class="value display" type="text" id="reason" [(ngModel)]="data.leaveRequest.reason" [placeholder]="'Reason for the leave'"></textarea>
+        </div>
+        <div class="form-group-row">
+          <label for="raised-on">Raised On</label>
+          <input
+            class="value"
+            type="date"
+            id="raised-on"
+            [(ngModel)]="raisedOnDateString"
+            disabled/>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button
+        [disabled]="data.leaveRequest.status!='underReview'"
+        (click)="approveRequest()"
+        class="btn-primary">Approve Request
+      </button>
+      <button
+      [disabled]="data.leaveRequest.status!='underReview'"
+      class="btn-secondary"
+      (click)="rejectRequest()"
+      >Reject Request</button>
+    </div>
+    </div>
+  </div>
+  <div *ngIf="showLoader">
+    <img class="loader-spinner" src="assets/Spinner-2.gif" alt="Loading ..."/>
+  </div>
+</div>

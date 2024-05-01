@@ -9,7 +9,10 @@
           [settings]="dropdownSettings"
           [data]="requestStatusList"
           [(ngModel)]="selectedRequestStatus"
-          (onSelect)="resetTable()">
+          (onSelect)="resetTable()"
+          (onSelectAll)="onSelectAll()"
+          (onDeSelect)="OnItemDeSelect($event)"
+          (onDeSelectAll)="OnItemDeSelectAll()">
         </ng-multiselect-dropdown>
     </div>
   </div>
@@ -26,12 +29,11 @@
           *ngFor="let row of tableData; let i = index"
         >
           <ng-container *ngFor="let option of tableHeaders">
-            <td [title]="option.name==='reason' ?row[option.name]:''" *ngIf="option.type!='actions' && option.type!=='date'">{{row[option.name]}}</td>
-            <td class="actions" *ngIf="option.type=='actions'">
-              <i [title]="'Approve'" (click)="approveRequest(row)" class="fa fa-check tick"></i>
-              <i [title]="'Reject'" (click)="rejectRequest(row)" class="fa fa-times cross"></i>
+            <td [title]="option.name==='reason' ?row[option.name]:''" *ngIf="option.type!='action'">{{row[option.name]}}</td>
+            <td class="actions" *ngIf="option.type=='action'" (click)="onViewRequest(row)">
+              <i [title]="'View Request'" class="fa fa-eye"></i>
+              <span class="icon-text">View Request</span>
             </td>
-            <td *ngIf="option.type=='date'">{{row[option.name].date}}-{{row[option.name].month}}-{{row[option.name].year}}</td>
           </ng-container>
         </tr>
       </tbody>

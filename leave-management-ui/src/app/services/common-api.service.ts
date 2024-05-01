@@ -25,8 +25,8 @@ export class CommonService {
   }
 
 
-  private get(url:string, payload:any){
-    return this.httpClient.get(url, payload);
+  private get(url:string){
+    return this.httpClient.get(url);
   }
 
   private post(url:string, payload:any){
@@ -52,7 +52,7 @@ export class CommonService {
   }
 
   public getRequestReport(data:any): Promise<any>{
-    return firstValueFrom(this.get(this.baseUrl+this.getRequestReportPath,data));
+    return firstValueFrom(this.get(this.baseUrl+this.getRequestReportPath+"/"+data));
   }
 
   public reviewRequest(data:any): Promise<any>{
